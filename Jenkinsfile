@@ -13,5 +13,11 @@ pipeline {
                 '''
             }
         }
+
+        stage('Disk Usage') {
+            steps {
+                sh 'df -h'
+            }
+        }
     }
 }
