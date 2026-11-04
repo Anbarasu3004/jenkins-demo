@@ -19,5 +19,10 @@ pipeline {
                 sh 'df -h'
             }
         }
+        stage('Environment') {
+    steps {
+        sh 'env'
+    }
+}
     }
 }
