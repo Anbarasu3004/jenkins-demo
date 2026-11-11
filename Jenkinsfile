@@ -3,20 +3,18 @@ pipeline {
 
     stages {
 
-        stage('Credentials Test') {
+        stage('AWS Identity Check') {
 
             steps {
 
                 withCredentials([
-                    usernamePassword(
-                        credentialsId: 'github-demo',
-                        usernameVariable: 'USER',
-                        passwordVariable: 'PASS'
-                    )
+                    string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')
                 ]) {
 
                     sh '''
-                    echo "Username is: $USER"
+                        export AWS_DEFAULT_REGION=us-east-1
+                        aws sts get-caller-identity
                     '''
                 }
             }
