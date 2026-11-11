@@ -3,26 +3,23 @@ pipeline {
 
     stages {
 
-        stage('Server Info') {
-            steps {
-                sh '''
-                whoami
-                pwd
-                hostname
-                date
-                '''
-            }
-        }
+        stage('Credentials Test') {
 
-        stage('Disk Usage') {
             steps {
-                sh 'df -h'
+
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'github-demo',
+                        usernameVariable: 'USER',
+                        passwordVariable: 'PASS'
+                    )
+                ]) {
+
+                    sh '''
+                    echo "Username is: $USER"
+                    '''
+                }
             }
         }
-        stage('Environment') {
-    steps {
-        sh 'env'
-    }
-}
     }
 }
